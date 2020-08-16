@@ -1,7 +1,7 @@
 import React from "react";
-import "./SidebarOptions.css";
 import { useHistory } from "react-router-dom";
-import db from "./firebase";
+import "./SidebarOptions.css";
+import db from "../../firebase";
 
 const SidebarOptions = ({ Icon, title, id, addChannelOption }) => {
   const history = useHistory();

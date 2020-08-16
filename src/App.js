@@ -1,14 +1,15 @@
-import React, { useState, Fragment } from "react";
-import "./App.css";
-import Header from "./Header";
-import Sidebar from "./Sidebar";
+import React, { Fragment } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Chat from "./Chat";
-import Login from "./Login";
+import "./App.css";
 import { useStateValue } from "./StateProvider";
 
+import Header from "./components/header/Header";
+import Sidebar from "./components/sidebar/Sidebar";
+import Chat from "./components/content/Chat";
+import Login from "./components/auth/Login";
+
 function App() {
-  const [{ user }, dispatch] = useStateValue();
+  const [{ user }] = useStateValue();
   return (
     <div className="App">
       <Router>
