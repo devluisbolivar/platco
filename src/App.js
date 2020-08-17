@@ -13,7 +13,7 @@ function App() {
   return (
     <div className="App">
       <Router>
-        {!user ? (
+        {user ? (
           <Login />
         ) : (
           <Fragment>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import "./Sidebar.css";
 import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 import CreateIcon from "@material-ui/icons/Create";
@@ -19,6 +19,9 @@ import { useStateValue } from "../../StateProvider";
 const Sidebar = () => {
   const [channels, setChannels] = useState([]);
   const [{ user }] = useStateValue();
+
+  const [openChannel, setOpenChannel] = useState(true);
+  const [openOptions, setOpenOptions] = useState(true);
 
   useEffect(() => {
     db.collection("rooms").onSnapshot((snapshot) =>
@@ -49,14 +52,34 @@ const Sidebar = () => {
       <SidebarOptions Icon={PeopleAltIcon} title="Personas & grupos" />
       <SidebarOptions Icon={AppsIcon} title="Apps" />
       <SidebarOptions Icon={FileCopyIcon} title="Buscador de archivos" />
-      <SidebarOptions Icon={ExpandLessIcon} title="Mostrar menos" />
+      <SidebarOptions
+        Icon={openOptions ? ExpandLessIcon : ExpandMoreIcon}
+        title={openOptions ? `Mostrar menos` : `Mostrar mas`}
+      />
       <hr />
-      <SidebarOptions Icon={ExpandMoreIcon} title="Canales" />
-      <hr />
-      <SidebarOptions Icon={AddIcon} addChannelOption title="Agregar canal" />
-      {channels.map((channel) => (
-        <SidebarOptions key={channel.id} id={channel.id} title={channel.name} />
-      ))}
+      <SidebarOptions
+        Icon={openChannel ? ExpandLessIcon : ExpandMoreIcon}
+        title="Canales"
+        setOpenChannel={setOpenChannel}
+        openChannel={openChannel}
+      />
+      {openChannel ? (
+        <Fragment>
+          <hr />
+          <SidebarOptions
+            Icon={AddIcon}
+            addChannelOption
+            title="Agregar canal"
+          />
+          {channels.map((channel) => (
+            <SidebarOptions
+              key={channel.id}
+              id={channel.id}
+              title={channel.name}
+            />
+          ))}
+        </Fragment>
+      ) : null}
     </div>
   );
 };
